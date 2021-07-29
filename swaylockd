@@ -1,0 +1,12 @@
+#!/bin/bash
+# swaylockd - Daemon for relaunching swaylock upon crash because random obscure bugs
+# (c) Pelle Hjek 2021
+# MIT license / GPLv3+
+# Github issue: https://github.com/swaywm/swaylock/issues/181
+
+## debugging: simulate swaylock crash every 3 seconds
+# test=$(while true; do sleep 3; pkill -9 swaylock; done)&
+
+function lock() { swaylock; exit; }
+trap lock SIGINT SIGQUIT SIGKILL SIGTERM SIGABRT SIGSEGV
+lock
